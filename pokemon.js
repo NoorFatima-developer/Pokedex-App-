@@ -11,4 +11,8 @@ let allPokemons = [];
 // Fetching all the pokemon data
 
 fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${MAX_POKEMON}`)
-.then((response) => response.json());
+.then((response) => response.json())
+.then((data) => {
+    allPokemons = data.results;
+    console.log(data);  
+})
