@@ -10,4 +10,4 @@ let allPokemons = [];
 
 // Fetching all the pokemon data
 
-fetch(`https://pokeapi.co/api/v2/pokemon/?limit=`)
+fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${MAX_POKEMON}`)
