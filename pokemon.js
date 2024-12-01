@@ -56,6 +56,16 @@ function displayPokemons(pokemon) {
     </div>
 
     <div class = "name-wrap">
-    <p class = "body3-fonts">#${pokemonID}</p>
+    <p class = "body3-fonts">#${pokemon.name}</p>
     </div>`
+
+    listitem.addEventListener("click", async () => {
+        const success = await fetchPokemonDataBeforeRedirect(pokemonID);
+        if(success) {
+            window.location.href = `pokemon.html?id=${pokemonID}`;
+        } else {
+            console.error("Failed to fetch Pokemon data before redirect");
+        }
+    })
 }
+
