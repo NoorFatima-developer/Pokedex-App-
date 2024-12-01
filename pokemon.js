@@ -29,7 +29,7 @@ async function fetchPokemonDataBeforeRedirect(id){
             then((res) => {
                 res.json()
             }),
-            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).
+            fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).
             then((res) => {
                 res.json()
             }),
