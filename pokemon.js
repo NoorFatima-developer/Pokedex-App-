@@ -80,7 +80,7 @@ function displayPokemons(pokemon) {
 searchInput.addEventListener("keyup", handleSearch);
 
 function handleSearch() {
-    const searchTerm = searchInput.value.toLowerCase
+    const searchTerm = searchInput.value.toLowerCase();
     let filteredPokemons;
 
     if(numberFilter.checked) {
@@ -90,10 +90,30 @@ function handleSearch() {
         });
     } else if (nameFilter.checked) {
         filteredPokemons = allPokemons.filter((pokemon) => {
-            return pokemon.name.toLowerCase().includes(searchTerm);
+            return pokemon.name.toLowerCase().startsWith(searchTerm);
         });
     } else {
         filteredPokemons = allPokemons;
     }
+    
+    displayPokemons(filteredPokemons);
+
+
+if(filteredPokemons.length === 0) {
+    notFouneMessage.style.display = "block"
+} else {
+    notFouneMessage.style.display = "none"
 }
 
+}
+
+const closeButton = document.querySelector(".search-close-icon");
+
+closeButton.addEventListener("click", () => {
+    searchInput.value = "";
+    clearSearch();
+});
+
+function clearSearch(){
+    listWrapper.remove();
+}
