@@ -69,7 +69,9 @@ function displayPokemons(pokemon) {
             console.error("Failed to fetch Pokemon data before redirect");
         };
     });
+
     listWrapper.appendChild(listitem);
+    
     });
 }
 
