@@ -110,10 +110,11 @@ if(filteredPokemons.length === 0) {
 const closeButton = document.querySelector(".search-close-icon");
 
 closeButton.addEventListener("click", () => {
-    searchInput.value = "";
     clearSearch();
 });
 
 function clearSearch(){
-    listWrapper.remove();
+    searchInput.value = "";
+    displayPokemons(allPokemons);
+    notFouneMessage.style.display = "none";
 }
