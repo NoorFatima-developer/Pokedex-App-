@@ -43,6 +43,8 @@ async function fetchPokemonDataBeforeRedirect(id){
 
 function displayPokemons(pokemon) {
     listWrapper.innerHTML = "";
+    pokemon.forEach((pokemon) => {
+
     const pokemonID = pokemon.url.split("/")[6];
     const listitem = document.createElement("div");
     listitem.classList.add("pokemon-card");
@@ -65,7 +67,11 @@ function displayPokemons(pokemon) {
             window.location.href = `pokemon.html?id=${pokemonID}`;
         } else {
             console.error("Failed to fetch Pokemon data before redirect");
-        }
-    })
+        };
+    });
+    listWrapper.appendChild(listitem);
+    });
 }
+
+
 
