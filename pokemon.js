@@ -92,6 +92,8 @@ function handleSearch() {
         filteredPokemons = allPokemons.filter((pokemon) => {
             return pokemon.name.toLowerCase().includes(searchTerm);
         });
+    } else {
+        filteredPokemons = allPokemons;
     }
 }
 
