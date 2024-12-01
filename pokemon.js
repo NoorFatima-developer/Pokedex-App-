@@ -19,13 +19,14 @@ fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${MAX_POKEMON}`)
     // console.log(data.results[0]);
     // console.log(data.results[0].name);
     // console.log(data.results[0].url);
-    console.log(allPokemons);         
+    // console.log(allPokemons);    
+    displayPokemons(allPokemons);     
 })  
 
 async function fetchPokemonDataBeforeRedirect(id){
     try{
         const [pokemon, pokemonSpecies] = await Promise.all([
-            fetch(`https://pokeapi.co/api/v2/pokemon/${id}`).
+            fetch(`https://pokseapi.co/api/v2/pokemon/${id}`).
             then((res) => {
                 res.json()
             }),
@@ -73,6 +74,7 @@ function displayPokemons(pokemon) {
     listWrapper.appendChild(listitem);
     
     });
+
 }
 
 
