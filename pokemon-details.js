@@ -156,3 +156,11 @@ function displayPokemonDetails(pokemon) {
 
     document.querySelector("title").textContent = capitalizeFirstLetter;
 }
+
+
+
+
+// map array ke har element ko process karta hai aur nayi values ka ek naya array return karta hai.
+// Why map here? map yahan use kiya gaya kyunki selectors ko DOM elements mein efficiently convert karna tha aur unko ek nayi array mein store karna tha.
+
+// When to use map? Jab aapko ek array ke har element pe operation karke ek nayi array banani ho.
