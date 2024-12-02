@@ -130,8 +130,28 @@ styleTag.innerHTML = `
   
   .stats-wrap .progress-bar::-webkit-progress-value {
   background-color: ${color};
-}
-  
-  `
+}`;
+
+document.head.appendChild(styleTag);
 
 };
+
+function capitalizeFirstLetter(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+}
+
+function createAppendElement(parent, tag, options) {
+    const element = document.createElement(tag);
+    Object.keys(options).forEach(key) => {
+        element[key] = options[key];
+    }
+    parent.appendChild(element);
+}
+
+function displayPokemonDetails(pokemon) {
+    const { name, id, types, weight, height, abilities, stats} = pokemon;
+    const capitalziePokemonName = capitalizeFirstLetter;
+
+    document.querySelector("title").textContent = capitalizeFirstLetter;
+}
