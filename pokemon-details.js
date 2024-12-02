@@ -167,15 +167,46 @@ function displayPokemonDetails(pokemon) {
   pokemon_id_wrap.textContent = `#${String(id).padStart(3, "0")}`
   const imageElement = document.querySelector(".detail-img-wrapper img");
   imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
+
+  // typewrapper:
   const typeWrapper = document.querySelector(".power-wrapper");
   typeWrapper.innerHTML = "";
-  
+
+  // type:
   types.forEach(({ type }) => {
     createAndAppendElement(typeWrapper, "p", {
       className: `body3-fonts type ${type.name}`,
       textContent: type.name,
     })
-  })
+  });
+
+  // weight & height:
+  document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight").textContent = `${weight / 10} kg`;
+  document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} m`;
+
+  // ability:
+  const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail-move");
+  abilities.forEach(({ ability }) => {
+    createAndAppendElement(abilitiesWrapper, "p", {
+      className: "body3-fonts",
+      textContent: ability.name,
+    });
+  });
+
+  // statswrapper:
+
+  const statsWrapper = document.querySelector(".stats-wrap");
+  statsWrapper.innerHTML = "";
+  
+  const statNameMapping = {
+    hp: "HP",
+    attack: "ATK",
+    defense: "DEF",
+    "special-attack": "SATK",
+    "special-defense": "SDEF",
+    speed: "SPD",
+  };
+
 }
 
 
