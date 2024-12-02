@@ -147,6 +147,7 @@ function createAppendElement(parent, tag, options) {
         element[key] = options[key];
     }
     parent.appendChild(element);
+    return element;
 }
 
 function displayPokemonDetails(pokemon) {
