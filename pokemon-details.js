@@ -207,9 +207,18 @@ function displayPokemonDetails(pokemon) {
     speed: "SPD",
   };
 
+  stats.forEach(({ base_stat, stat }) => {
+    const statDiv = document.createElement("div");
+    statDiv.className = "stats-wrap";
+    statsWrapper.appendChild(statDiv);
+
+    createAndAppendElement(statDiv, "p", {
+      className: "body3-fonts stats",
+      textContent: statNameMapping[stat.name],
+    })
+})
+
 }
-
-
 // map array ke har element ko process karta hai aur nayi values ka ek naya array return karta hai.
 // Why map here? map yahan use kiya gaya kyunki selectors ko DOM elements mein efficiently convert karna tha aur unko ek nayi array mein store karna tha.
 
