@@ -169,6 +169,13 @@ function displayPokemonDetails(pokemon) {
   imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
   const typeWrapper = document.querySelector(".power-wrapper");
   typeWrapper.innerHTML = "";
+  
+  types.forEach(({ type }) => {
+    createAndAppendElement(typeWrapper, "p", {
+      className: `body3-fonts type ${type.name}`,
+      textContent: type.name,
+    })
+  })
 }
 
 
