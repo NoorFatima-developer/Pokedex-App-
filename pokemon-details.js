@@ -216,6 +216,17 @@ function displayPokemonDetails(pokemon) {
       className: "body3-fonts stats",
       textContent: statNameMapping[stat.name],
     })
+
+    createAndAppendElement(statDiv, "p", {
+      className: "body3-fonts",
+      textContent: String(base_stat.padStart(3, "0")),
+    })
+
+    createAndAppendElement(statDiv, "progress", {
+      className: "progress-bar",
+      value: base_stat,
+      max: 100,
+    })
 })
 
 }
