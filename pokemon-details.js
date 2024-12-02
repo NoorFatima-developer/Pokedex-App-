@@ -12,3 +12,41 @@ document.addEventListener("DOMContentLoaded", function() {
     currentPokemonId = id;
     loadPokemon(id);
 });
+
+async function loadPokemon(id){
+
+        try{
+            const [pokemon, pokemonSpecies] = await Promise.all([
+                fetch(`https://pokseapi.co/api/v2/pokemon/${id}`).
+                then((res) => {
+                    res.json()
+                }),
+                fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`).
+                then((res) => {
+                    res.json()
+                }),
+            ]);
+
+            const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail move")
+            abilitiesWrapper.innerHTML = "";
+
+            if (currentPokemonId === id) {
+                displayPokemonDetails(pokemon);
+                const flavorText = getEnglishFlavorText(pokemonSpecies);
+                document.querySelector(".body3-fonts.pokmon-description").textContent = flavorText;
+        
+            const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map((sel) => 
+                document.querySelector(sel)
+            );
+
+            leftArrow.removeEventListener("click",navigatePokemon);
+            rightArrow.removeEventListener("click", navigatePokemon);
+            }
+
+            return true;
+        
+    } catch (error) {
+        console.log("An error occurred while fetching Pokemon data:"), error;
+        return false;
+    }
+}
