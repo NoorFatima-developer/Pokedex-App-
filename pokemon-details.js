@@ -90,3 +90,48 @@ const typeColors = {
       element.style[cssProperty] = value;
     });
   }
+
+  function rgbaFromHex(hexColor) {
+    return [
+      parseInt(hexColor.slice(1, 3), 16),
+      parseInt(hexColor.slice(3, 5), 16),
+      parseInt(hexColor.slice(5, 7), 16),
+    ].join(", ");
+  }
+
+  function setTypeBackgroundColor(pokemon){
+    const mainType = pokemon.types[0].type.name;
+    const color = typeColors(mainType);
+
+
+  if(!color){
+    console.warn(`Color not defined for type: ${mainType}`);
+    return;
+  }
+
+  const detailMainElement = document.querySelector(".detail-main");
+
+  setElementStyle([detailMainElement],
+    "backgroundColor", color
+  );
+  setElementStyle([detailMainElement], "borderColor", color);
+
+setElementStyle(document.querySelectorAll(".power-wrapper" > p), "backgroundColor", color);
+setElementStyle(document.querySelectorAll(".stats-wrap p.stats"), "color", color );
+setElementStyle(document.querySelectorAll(".-stats-wrap .progress-bar" ), "color", color );
+
+
+const rgbaColor = rgbaFromHex(color);
+const styleTag = document.createElement("style");
+styleTag.innerHTML = `
+.stats-wrap .progress-bar::-webkit-progress-bar {
+  background-color: rgba(${rgbaColor}, 0.5);
+  }
+  
+  .stats-wrap .progress-bar::-webkit-progress-value {
+  background-color: ${color};
+}
+  
+  `
+
+};
