@@ -43,6 +43,14 @@ async function loadPokemon(id){
             rightArrow.removeEventListener("click", navigatePokemon);
             }
 
+            if(id!==1){
+                leftArrow.addEventListener("click", () => navigatePokemon(id-1));
+            }
+            if(id!==MAX_POKEMONS){
+                rightArrow.addEventListener("click", () => navigatePokemon(id+1));
+            }
+
+            window.history.pushState({}, "", `./details.html?id= {id}`);
             return true;
         
     } catch (error) {
@@ -50,3 +58,9 @@ async function loadPokemon(id){
         return false;
     }
 }
+
+async function navigatePokemon(id) {
+    currentPokemonId = id;
+    await loadPokemon(id);
+}
+
