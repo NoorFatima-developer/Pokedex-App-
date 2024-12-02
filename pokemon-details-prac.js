@@ -1,5 +1,6 @@
 let currentPokemonId = null;
 
+// Load HTML document:
 document.addEventListener("DOMContentLoaded", () => {
   const MAX_POKEMONS = 151;
   // query selector is : ? key = value;
@@ -7,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const id = parseInt(pokemonID, 10);
 
   if (id < 1 || id > MAX_POKEMONS) {
+    console.error(`Invalid Pokémon ID: ${id}`);
     return (window.location.href = "./index.html");
   }
 
@@ -14,6 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
   loadPokemon(id);
 });
 
+
+// loadPokemon function:
 async function loadPokemon(id) {
 
   try {
@@ -26,20 +30,17 @@ async function loadPokemon(id) {
       ),
     ]);
 
-    const abilitiesWrapper = document.querySelector(
-      ".pokemon-detail-wrap .pokemon-detail .move"
-    );
+    const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail.move");
     abilitiesWrapper.innerHTML = "";
 
     if (currentPokemonId === id) {
-      displayPokemonDetails(pokemon);
-      const flavorText = getEnglishFlavorText(pokemonSpecies);
-      document.querySelector(".body3-fonts.pokemon-description").textContent =
-        flavorText;
 
-      const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map((sel) =>
-        document.querySelector(sel)
-      );
+      displayPokemonDetails(pokemon);
+
+      const flavorText = getEnglishFlavorText(pokemonSpecies);
+      document.querySelector(".body3-fonts.pokemon-description").textContent = flavorText;
+
+      const [leftArrow, rightArrow] = ["#leftArrow", "#rightArrow"].map((sel) => document.querySelector(sel));
       leftArrow.removeEventListener("click", navigatePokemon);
       rightArrow.removeEventListener("click", navigatePokemon);
 
@@ -48,6 +49,7 @@ async function loadPokemon(id) {
           navigatePokemon(id - 1);
         });
       }
+
       if (id !== 151) {
         rightArrow.addEventListener("click", () => {
           navigatePokemon(id + 1);
@@ -62,13 +64,15 @@ async function loadPokemon(id) {
     console.error("An error occured while fetching Pokemon data:", error);
     return false;
   }
-}
+} 
 
+// NavigatePokemon:(Create a new Pokemon)
 async function navigatePokemon(id) {
   currentPokemonId = id;
   await loadPokemon(id);
 }
 
+// typeColors
 const typeColors = {
   normal: "#A8A878",
   fire: "#F08030",
@@ -87,7 +91,6 @@ const typeColors = {
   dragon: "#7038F8",
   dark: "#705848",
   steel: "#B8B8D0",
-  dark: "#EE99AC",
 };
 
 function rgbaFromHex(hexColor) {
@@ -104,15 +107,20 @@ function setElementStyles(elements, cssProperty, value) {
   });
 }
 
+// setTypeBackgroundColor:
 function setTypeBackgroundColor(pokemon) {
   const mainType = pokemon.types[0].type.name;
   const color = typeColors[mainType];
+  console.log("Main Type:", mainType, "Color:", color); // Debugging
+
+  
 
   if (!color) {
     console.warn(`Color not defined for type: ${mainType}`);
     return;
   }
-
+  
+  // use setElementStyle here:
   const detailMainElement = document.querySelector(".detail-main");
   setElementStyles([detailMainElement], "backgroundColor", color);
   setElementStyles([detailMainElement], "borderColor", color);
@@ -120,6 +128,7 @@ function setTypeBackgroundColor(pokemon) {
   setElementStyles(document.querySelectorAll(".stats-wrap p.stats"),"color",color);
   setElementStyles(document.querySelectorAll(".stats-wrap .progress-bar"),"color",color);
 
+  // use rgbaColor here:
   const rgbaColor = rgbaFromHex(color);
   const styleTag = document.createElement("style");
   styleTag.innerHTML = `
@@ -134,6 +143,8 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 }
 
+// CreateAndAppendElement:
+
 function createAndAppendElement(parent, tag, options = {}) {
   const element = document.createElement(tag);
   Object.keys(options).forEach((key) => {
@@ -143,40 +154,41 @@ function createAndAppendElement(parent, tag, options = {}) {
   return element;
 }
 
+// DisplayPokemonDetails:
 function displayPokemonDetails(pokemon) {
   const { name, id, types, weight, height, abilities, stats } = pokemon;
-  const detailMainElement = document.querySelector(".detail-main");
+  // use capitalizeFirstLetter here:
   const capitalizePokemonName = capitalizeFirstLetter(name);
-
-  document.querySelector("title").textContent = capitalizePokemonName;
+  const title = document.querySelector("title");
+  title.textContent = capitalizePokemonName;
+  const detailMainElement = document.querySelector(".detail-main");
   detailMainElement.classList.add(name.toLowerCase());
-  document.querySelector(".name-wrap .name").textContent = capitalizePokemonName;
-
-  document.querySelector(".pokemon-id-wrap .body2-fonts").textContent = `#${String(id).padStart(3, "0")}`;
-
+  const namewrap = document.querySelector(".name-wrap .name");
+  namewrap.textContent = capitalizePokemonName;
+  const pokemon_id_wrap = document.querySelector(".pokemon-id-wrap .body2-fonts");
+  pokemon_id_wrap.textContent = `#${String(id).padStart(3, "0")}`
   const imageElement = document.querySelector(".detail-img-wrapper img");
   imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
-  imageElement.alt = name;
+  imageElement.alt = name
 
+  // typewrapper:
   const typeWrapper = document.querySelector(".power-wrapper");
   typeWrapper.innerHTML = "";
+
+  // type:
   types.forEach(({ type }) => {
     createAndAppendElement(typeWrapper, "p", {
       className: `body3-fonts type ${type.name}`,
       textContent: type.name,
-    });
+    })
   });
 
-  document.querySelector(
-    ".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight"
-  ).textContent = `${weight / 10}kg`;
-  document.querySelector(
-    ".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height"
-  ).textContent = `${height / 10}m`;
+  // weight & height:
+  document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.weight").textContent = `${weight / 10} kg`;
+  document.querySelector(".pokemon-detail-wrap .pokemon-detail p.body3-fonts.height").textContent = `${height / 10} m`;
 
-  const abilitiesWrapper = document.querySelector(
-    ".pokemon-detail-wrap .pokemon-detail.move"
-  );
+  // ability:
+  const abilitiesWrapper = document.querySelector(".pokemon-detail-wrap .pokemon-detail-move");
   abilities.forEach(({ ability }) => {
     createAndAppendElement(abilitiesWrapper, "p", {
       className: "body3-fonts",
@@ -184,9 +196,11 @@ function displayPokemonDetails(pokemon) {
     });
   });
 
+  // statswrapper:
+
   const statsWrapper = document.querySelector(".stats-wrapper");
   statsWrapper.innerHTML = "";
-
+  
   const statNameMapping = {
     hp: "HP",
     attack: "ATK",
@@ -204,29 +218,37 @@ function displayPokemonDetails(pokemon) {
     createAndAppendElement(statDiv, "p", {
       className: "body3-fonts stats",
       textContent: statNameMapping[stat.name],
-    });
+    })
 
     createAndAppendElement(statDiv, "p", {
       className: "body3-fonts",
-      textContent: String(base_stat).padStart(3, "0"),
-    });
+      textContent: String(base_stat.padStart(3, "0")),
+    })
 
     createAndAppendElement(statDiv, "progress", {
       className: "progress-bar",
       value: base_stat,
       max: 100,
     });
-  });
+});
 
   setTypeBackgroundColor(pokemon);
+
 }
 
-function getEnglishFlavorText(pokemonSpecies) {
-  for (let entry of pokemonSpecies.flavor_text_entries) {
-    if (entry.language.name === "en") {
-      let flavor = entry.flavor_text.replace(/\f/g, " ");
+
+// getEnglishFlavor:
+function getEnglishFlavorText(pokemonSpecies){
+  for (let entry of pokemonSpecies.flavor_text_entries) 
+    {
+    if (entry.language.name === 'en') {
+      let flavor = entry.flavor_text.replace(/\f/g, "")
       return flavor;
     }
   }
   return "";
 }
+// map array ke har element ko process karta hai aur nayi values ka ek naya array return karta hai.
+// Why map here? map yahan use kiya gaya kyunki selectors ko DOM elements mein efficiently convert karna tha aur unko ek nayi array mein store karna tha.
+
+// When to use map? Jab aapko ek array ke har element pe operation karke ek nayi array banani ho.
