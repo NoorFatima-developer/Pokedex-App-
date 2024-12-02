@@ -157,14 +157,19 @@ function displayPokemonDetails(pokemon) {
   const { name, id, types, weight, height, abilities, stats } = pokemon;
   // use capitalizeFirstLetter here:
   const capitalizePokemonName = capitalizeFirstLetter(name);
-  document.querySelector("title").textContent = capitalizePokemonName;
+  const title = document.querySelector("title");
+  title.textContent = capitalizePokemonName;
   const detailMainElement = document.querySelector(".detail-main");
   detailMainElement.classList.add(name.toLowerCase());
-  document.querySelector("name-wrap .name").textContent = capitalizePokemonName;
-  document.querySelector(".pokemon-id-wrap .body2-fonts").textContent = `#${String(id).padStart(3, "0")}`
+  const namewrap = document.querySelector("name-wrap .name");
+  namewrap.textContent = capitalizePokemonName;
+  const pokemon_id_wrap = document.querySelector(".pokemon-id-wrap .body2-fonts");
+  pokemon_id_wrap.textContent = `#${String(id).padStart(3, "0")}`
+  const imageElement = document.querySelector(".detail-img-wrapper img");
+  imageElement.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`;
+  const typeWrapper = document.querySelector(".power-wrapper");
+  typeWrapper.innerHTML = "";
 }
-
-
 
 
 // map array ke har element ko process karta hai aur nayi values ka ek naya array return karta hai.
