@@ -147,22 +147,21 @@ function createAndAppendElement(parent, tag, options = {}) {
   Object.keys(options).forEach((key) => {
     element[key] = options[key];
   });
-  
+
   parent.appendChild(element);
   return element;
 }
 
 // DisplayPokemonDetails:
 function displayPokemonDetails(pokemon) {
-
   const { name, id, types, weight, height, abilities, stats } = pokemon;
-  const detailMainElement = document.querySelector(".detail-main");
   // use capitalizeFirstLetter here:
   const capitalizePokemonName = capitalizeFirstLetter(name);
-
   document.querySelector("title").textContent = capitalizePokemonName;
-
-
+  const detailMainElement = document.querySelector(".detail-main");
+  detailMainElement.classList.add(name.toLowerCase());
+  document.querySelector("name-wrap .name").textContent = capitalizePokemonName;
+  document.querySelector(".pokemon-id-wrap .body2-fonts").textContent = `#${String(id).padStart(3, "0")}`
 }
 
 
